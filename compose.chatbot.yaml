@@ -1,0 +1,18 @@
+services:
+  chatbot:
+    depends_on:
+      neo4j:
+        condition: service_healthy
+    build:
+      context: https://github.com/MaksimAniskov/archi-powertools-chatbot.git#1.x:/
+    command: python /chatbot.py
+    environment:
+      OPENAI_API_KEY: $OPENAI_API_KEY
+    links:
+      - "neo4j:neo4j"
+
+  neo4j:
+    healthcheck:
+      test: wget -O /dev/null http://neo4j:7474
+      interval: 20s
+      retries: 20
