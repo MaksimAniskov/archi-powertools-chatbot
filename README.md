@@ -65,9 +65,8 @@ Then following prompt for choosing AI model appears.
 ~~~text
 Choose model from the list.
 [0] o1-preview
-[1] o1
-[2] o1-mini
-[3] gpt-4o
+[1] o1-mini
+[2] gpt-4o
 ~~~
 
 For sake of following example conversation, I'm going to use _o1-preview_ model. So, I type in _0_ and press _Enter_. My output is like this.

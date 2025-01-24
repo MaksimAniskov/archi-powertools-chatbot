@@ -5,7 +5,6 @@ import sys
 
 MODELS = [
     "o1-preview",
-    "o1",
     "o1-mini",
     "gpt-4o",
 ]
@@ -64,16 +63,6 @@ graph = langchain_neo4j.Neo4jGraph(
     url="bolt://neo4j:7687", username="", password=""
 )
 
-chain = langchain_neo4j.GraphCypherQAChain.from_llm(
-    langchain_openai.ChatOpenAI(model="o1-preview-2024-09-12"),
-    graph=graph,
-    top_k=20,
-    verbose=True,
-    cypher_prompt=CYPHER_GENERATION_PROMPT,
-    return_intermediate_steps=True,
-    allow_dangerous_requests=True,
-)
-
 print("Choose model from the list.")
 for i, m in enumerate(MODELS):
     print(f'[{i}] {m}')
@@ -84,6 +73,16 @@ if model_index < 0 or model_index >= len(MODELS):
 model = MODELS[model_index]
 
 print(f"Using model {model}.")
+
+chain = langchain_neo4j.GraphCypherQAChain.from_llm(
+    langchain_openai.ChatOpenAI(model=model),
+    graph=graph,
+    top_k=20,
+    verbose=True,
+    cypher_prompt=CYPHER_GENERATION_PROMPT,
+    return_intermediate_steps=True,
+    allow_dangerous_requests=True,
+)
 
 print(
     """Ask your questions.
